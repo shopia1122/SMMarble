@@ -75,6 +75,8 @@ int main(int argc, const char * argv[]) {
     int type;                  //node type
     int credit;                //grade
     int energy;
+    int cnt;
+    int pos;
     
     board_nr = 0;
     food_nr = 0;
@@ -148,9 +150,11 @@ int main(int argc, const char * argv[]) {
     while ();
     generatePlayers();
     */
-    
+    #endif
+    cnt = 0;
+    pos = 0;
     //3. SM Marble game starts ---------------------------------------------------------------------------------
-    while () //is anybody graduated?
+    while (cnt < 5) //is anybody graduated?
     {
         int die_result;
         
@@ -162,14 +166,19 @@ int main(int argc, const char * argv[]) {
         
         //4-3. go forward
         //goForward();
-
+        //pos = pos + 2;
+        pos = (pos + rand()%6 + 1)%board_nr;
+        printf("node: %s, type: %i (%s)\n", smmObj_getName(pos), smmObj_getType(pos), smmObj_getTypeName(pos));
+        
 		//4-4. take action at the destination node of the board
         //actionNode();
         
         //4-5. next turn
         
+        cnt++;
+        
     }
-  #endif
+ 
     system("PAUSE");
     return 0;
 }

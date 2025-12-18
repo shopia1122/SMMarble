@@ -35,6 +35,9 @@
 
 //object generation
 int smmObj_genNode(char* name, int type, int credit, int energy);
+char* smmObj_getName(int node_nr);
+int smmObj_getType(int node_nr);
+char* smmObj_getTypeName(int node_nr);
 
 //member retrieving
 

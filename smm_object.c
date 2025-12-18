@@ -55,7 +55,20 @@ int smmObj_genNode(char* name, int type, int credit, int energy)
 
 
 //member retrieving
+char* smmObj_getName(int node_nr)
+{
+      return (smm_name[node_nr]);
+}
 
+int smmObj_getType(int node_nr)
+{
+      return (smm_type[node_nr]);
+}
+
+char* smmObj_getTypeName(int node_nr)
+{
+      return (smmNodeName[smm_type[node_nr]]);
+}
 
 #if 0
 //element to string
