@@ -9,14 +9,46 @@
 #include "smm_object.h"
 #include <string.h>
 
-#define MAX_NODETYPE    7
-#define MAX_GRADE       9
 
+#define MAX_NODENR      100
+#define MAX_NODETYPE     7
+#define MAX_GRADE        9
 
+#define SMMNODE_TPYE_LECTURE        0
+#define SMMNODE_TPYE_RESTAURANT     1
+#define SMMNODE_TPYE_LABORATORY     2
+#define SMMNODE_TPYE_HOME           3
+#define SMMNODE_TPYE_GOTOLAB        4
+#define SMMNODE_TPYE_FOODCHANCE     5
+#define SMMNODE_TPYE_FESTIVAL       6
+
+static char smmNodeName[MAX_NODETYPE][MAX_CHARNAME] = {
+       "lecture",
+       "restaurant",
+       "laboratory",
+       "home",
+       "gotoLab",
+       "foodChance",
+       "festival"       
+};
+
+static int smm_nodeNr = 0;
+static char smm_name[MAX_NODENR][MAX_CHARNAME];
+static int smm_type[MAX_NODENR];
+static int smm_credit[MAX_NODENR];
+static int smm_energy[MAX_NODENR];
 
 //object generation
-void smmObj_genNode(void)
+int smmObj_genNode(char* name, int type, int credit, int energy)
 {
+     strcpy(smm_name[smm_nodeNr], name);
+     smm_type[smm_nodeNr] = type;
+     smm_type[smm_nodeNr] = credit;
+     smm_type[smm_nodeNr] = energy;
+     
+     smm_nodeNr++;
+     
+     return (smm_nodeNr);
     
 }
 
