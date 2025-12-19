@@ -27,6 +27,7 @@ typedef struct {
         int pos;
         int credit;
         int energy;
+        int flag_graduated;
 } smm_player_t;
 
 smm_player_t smm_players[MAX_PLAYER];
@@ -37,13 +38,23 @@ void printPlayerStatus(void); //print all player status at the beginning of each
 
 //function prototypes
 #if 0
-int isGraduated(void); //check if any player is graduated
 void printGrades(int player); //print grade history of the player
 float calcAverageGrade(int player); //calculate average grade of the player
 smmGrade_e takeLecture(int player, char *lectureName, int credit); //take the lecture (insert a grade of the player)
 void* findGrade(int player, char *lectureName); //find the grade from the player's grade history
 void printGrades(int player); //print all the grade history of the player
 #endif
+
+int isGraduated(void) //check if any player is graduated
+{
+    int i;
+    for(i=0; i<smm_player_nr; i++)
+    {
+       if(smm_players[i].flag_graduated == 1)
+          return 1;
+    }
+    return 0;
+}
 
 void goForward(int player, int step) //make player go "step" steps on the board (check if player is graduated)
 {
@@ -78,6 +89,7 @@ void generatePlayers(int n, int initEnergy) //generate a new player
          smm_players[i].pos = 0;
          smm_players[i].credit = 0;
          smm_players[i].energy = initEnergy;
+         smm_players[i].flag_graduated = 0;
          
          printf("Input %i-th player name: ", i);
          scanf("%s", &smm_players[i].name[0]);
@@ -99,18 +111,51 @@ int rolldie(int player)
     return (rand()%MAX_DIE + 1);
 }
 
-#if 0
+
 //action code when a player stays at a node
 void actionNode(int player)
 {
+    int type = smmObj_getNodeType(smm_players[player].pos);
+    int credit = smmObj_getNodeCredit(smm_players[player].pos);
+    int energy = smmObj_getNodeEnergy(smm_players[player].pos);
+    
+    printf(" --> player%i pos: %i, type: %s, credit: %i, energy: %i\n", 
+             player, smm_players[player].pos, smmObj_getTypeName(type), credit, energy
+             );
+    
     switch(type)
-    {
-        //case lecture:
-        default:
-            break;
+    { 
+        case SMMNODE_TPYE_LECTURE:
+             smm_players[player].credit += credit;
+             smm_players[player].energy -= energy;
+             break;
+             
+        case SMMNODE_TPYE_RESTAURANT:
+             smm_players[player].energy += energy; 
+             break;
+             
+        case SMMNODE_TPYE_LABORATORY:
+             break;
+             
+        case SMMNODE_TPYE_HOME:
+             smm_players[player].energy += energy;
+             if(smm_players[player].credit <= GRADUATE_CREDIT)
+             {
+                 smm_players[player].flag_graduated = 1;
+             }
+             break;
+             
+        case SMMNODE_TPYE_GOTOLAB:
+             break;
+             
+        case SMMNODE_TPYE_FOODCHANCE:
+             break;
+             
+        case SMMNODE_TPYE_FESTIVAL:
+             break;
+       
     }
 }
-#endif
 
 
 int main(int argc, const char * argv[]) {
@@ -120,7 +165,6 @@ int main(int argc, const char * argv[]) {
     int type;                  //node type
     int credit;                //grade
     int energy;
-    int cnt;
     int turn;
     
     smm_board_nr = 0;
@@ -205,10 +249,9 @@ int main(int argc, const char * argv[]) {
     generatePlayers(smm_player_nr, smmObj_getNodeEnergy(0) );
 
     
-    cnt = 0;
     turn = 0;
     //3. SM Marble game starts ---------------------------------------------------------------------------------
-    while (cnt < 5) //is anybody graduated?
+    while (isGraduated() == 0) //is anybody graduated?
     {
         int die_result;
         
@@ -223,11 +266,10 @@ int main(int argc, const char * argv[]) {
         //pos = pos + 2;
         
 		//4-4. take action at the destination node of the board
-        //actionNode();
+        actionNode(turn);
         
         //4-5. next turn
         
-        cnt++;
         turn = (turn + 1) % smm_player_nr;
         
     }

@@ -14,13 +14,7 @@
 #define MAX_NODETYPE     7
 #define MAX_GRADE        9
 
-#define SMMNODE_TPYE_LECTURE        0
-#define SMMNODE_TPYE_RESTAURANT     1
-#define SMMNODE_TPYE_LABORATORY     2
-#define SMMNODE_TPYE_HOME           3
-#define SMMNODE_TPYE_GOTOLAB        4
-#define SMMNODE_TPYE_FOODCHANCE     5
-#define SMMNODE_TPYE_FESTIVAL       6
+
 
 static char smmObj_nodeName[MAX_NODETYPE][MAX_CHARNAME] = {
        "lecture",
@@ -72,6 +66,11 @@ char* smmObj_getNodeName(int node_nr)
 int smmObj_getNodeType(int node_nr)
 {
       return (smmObj_board[node_nr].type);
+}
+
+int smmObj_getNodeCredit(int node_nr)
+{
+      return (smmObj_board[node_nr].credit);
 }
 
 int smmObj_getNodeEnergy(int node_nr)
