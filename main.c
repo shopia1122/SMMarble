@@ -45,13 +45,13 @@ void goForward(int player, int step) //make player go "step" steps on the board 
      int i;
      //player_pos[player] = player_pos[player] + step;
      printf("start from %i(%s) (%i)\n", player_pos[player], 
-                                        smmObj_getName(player_pos[i]), step);
+                                        smmObj_getNodeName(player_pos[player]), step);
 
      for(i=0; i<step; i++)
      {
         player_pos[player] = (player_pos[player] + 1) % board_nr;
         printf(" => moved to %i(%s)\n", player_pos[player], 
-                                        smmObj_getName(player_pos[i]));
+                                        smmObj_getNodeName(player_pos[player]));
      }
 }
 
@@ -61,7 +61,7 @@ void printPlayerStatus(void)
      for (i = 0; i< player_nr; i++)
      {
          printf("%s - position: %i(%s), credit: %i, energy: %i\n", 
-                 player_name[i], player_pos[i], smmObj_getName(player_pos[i]), player_credit[i], player_energy[i]);
+                 player_name[i], player_pos[i], smmObj_getNodeName(player_pos[i]), player_credit[i], player_energy[i]);
      }
 }
 
@@ -197,7 +197,7 @@ int main(int argc, const char * argv[]) {
     
     
     
-    generatePlayers(player_nr, smmObj_getEnergy(0) );
+    generatePlayers(player_nr, smmObj_getNodeEnergy(0) );
 
     
     cnt = 0;
