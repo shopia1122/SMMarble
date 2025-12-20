@@ -52,7 +52,7 @@ void* findGrade(int player, char *lectureName) //find the grade from the player'
      for(i=0;i<size;i++)
      {
         void *ptr = smmdb_getData(LISTNO_OFFSET_GRADE+player, i);
-        if(strcmp(smmObj_getObjectName(ptr), lectureName) == 0)
+        if(strcmp(smmObj_getObjectName((int)ptr), lectureName) == 0)
         {
             return ptr;
         }
@@ -80,13 +80,13 @@ void goForward(int player, int step) //make player go "step" steps on the board 
      //player_pos[player] = player_pos[player] + step;
      ptr = smmdb_getData(LISTNO_NODE, smm_players[player].pos);
      printf("start from %i(%s) (%i)\n", smm_players[player].pos, 
-                                        smmObj_getObjectName(ptr), step);
+                                        smmObj_getObjectName((int)ptr), step);
 
      for(i=0; i<step; i++)
      {
         smm_players[player].pos = (smm_players[player].pos + 1) % smm_board_nr;
         printf(" => moved to %i(%s)\n", smm_players[player].pos, 
-                                        smmObj_getNodeName(smm_players[player].pos));
+                                        smmObj_getObjectName(smm_players[player].pos));
      }
 }
 
@@ -96,7 +96,7 @@ void printPlayerStatus(void)
      for (i = 0; i< smm_player_nr; i++)
      {
          printf("%s - position: %i(%s), credit: %i, energy: %i\n", 
-                 smm_players[i].name, smm_players[i].pos, smmObj_getNodeName(smm_players[i].pos), smm_players[i].credit, smm_players[i].energy);
+                 smm_players[i].name, smm_players[i].pos, smmObj_getObjectName(smm_players[i].pos), smm_players[i].credit, smm_players[i].energy);
      }
 }
 
@@ -140,7 +140,7 @@ void actionNode(int player)
 {
     void *ptr = smmdb_getData(LISTNO_NODE, smm_players[player].pos);
     
-    int type = smmObj_getNodeType(ptr);
+    int type = smmObj_getNodeType((int)ptr);
     int credit = smmObj_getNodeCredit(smm_players[player].pos);
     int energy = smmObj_getNodeEnergy(smm_players[player].pos);
     int grade;
@@ -153,14 +153,14 @@ void actionNode(int player)
     switch(type)
     { 
         case SMMNODE_TPYE_LECTURE:
-        if(findGrade(, ) == NULL)
+        if(findGrade(player, smmObj_getObjectName((int)ptr)) == NULL)
         {
              smm_players[player].credit += credit;
              smm_players[player].energy -= energy;
              
              grade = rand()%SMMNODE_MAX_GRADE;
              
-             gradePtr = smmObj_genObject(smmObj_getObjectName(ptr), SMMNODE_OBJTYPE_GRADE, 
+             gradePtr = smmObj_genObject(smmObj_getObjectName((int)ptr), SMMNODE_OBJTYPE_GRADE, 
                                type, credit, energy, grade);
              smmdb_addTail(LISTNO_OFFSET_GRADE+player, gradePtr);
         }              

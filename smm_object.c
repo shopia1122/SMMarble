@@ -10,8 +10,8 @@
 #include <string.h>
 
 
-#define MAX_NODENR      100
-#define MAX_NODETYPE     7
+#define MAX_NODENR               100
+#define MAX_NODETYPE              7
 
 
 #define GRADE_APLUS      0
@@ -38,7 +38,7 @@ static char smmObj_nodeName[MAX_NODETYPE][MAX_CHARNAME] = {
        "festival"       
 };
 
-static char smmObj_gradeName[MAX_GRADE][MAX_CHARNAME] = {
+static char smmObj_gradeName[SMMNODE_MAX_GRADE][MAX_CHARNAME] = {
        "APLUS",
        "A0",
        "AMINUS",
@@ -92,14 +92,18 @@ char* smmObj_getObjectName(void *ptr)
       return (objPtr->name);
 }
 
-int smmObj_getObjectType(int node_nr)
+int smmObj_getObjectType(void *ptr)
 {
-      return (smmObj_board[node_nr].type);
+      smmObj_object_t* objPtr = (smmObj_object_t*)ptr;
+    
+      return (objPtr->type);
 }
 
-int smmObj_getObjectCredit(int node_nr)
+int smmObj_getObjectCredit(void *ptr)
 {
-      return (smmObj_board[node_nr].credit);
+      smmObj_object_t* objPtr = (smmObj_object_t*)ptr;
+    
+      return (objPtr->credit);
 }
 
 int smmObj_getObjectEnergy(void *ptr)
