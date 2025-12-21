@@ -194,7 +194,9 @@ void actionNode(int player)
              break;
              
         case SMMNODE_TPYE_FOODCHANCE:
-             foodchance = rand()% 3;
+             foodchance = rand()% SMMNODE_TPYE_FOODCHANCE;
+             
+             foodenergy = foodchance;
              
              smmplayers[player].energy += foodenergy;
              
