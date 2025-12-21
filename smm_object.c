@@ -115,14 +115,16 @@ int smmObj_getObjectEnergy(void *ptr)
 
 char* smmObj_getTypeName(int node_type)
 {
-      return (smmObj_nodeName[node_type]);
+      smmObj_object_t* objPtr = (smmObj_object_t*)ptr;
+      
+      return (objPtr->objType);
 } 
 
-#if 0
 char* smmObj_getGradeName(smmGrade_e grade)
 {
-    return smmGradeName[grade];
+      smmObj_object_t* objPtr = (smmObj_object_t*)ptr;
+      
+      return (objPtr->grade);
 }
 
-#endif
 

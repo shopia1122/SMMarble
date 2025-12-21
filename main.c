@@ -48,6 +48,7 @@ smmGrade_e takeLecture(int player, char *lectureName, int credit) //take the lec
       for(i=0;i<MAX_NODETYPE;i++)
       {
         grade = rand()%SMMNODE_MAX_GRADE;
+        
       }
 }
 
@@ -150,7 +151,7 @@ void actionNode(int player)
     int type = smmObj_getObjectType((int)ptr);
     int credit = smmObj_getObjectCredit(smm_players[player].pos);
     int energy = smmObj_getObjectEnergy(smm_players[player].pos);
-    int grade;
+    int grade = smmObj_getTypeName(smm_players[player].pos);
     int foodchance; //choose the random food card, 음식카드를 랜덤으로 고르기 위한 변수  
     int foodenergy; // plus energy, 현재 에너지에 더해지는 보충 에너지를 표현하는 변수  
     void *gradePtr;
@@ -319,6 +320,7 @@ int main(int argc, const char * argv[]) {
         //pos = pos + 2;
         
 		//4-4. take action at the destination node of the board
+		
         actionNode(turn);
         
         //4-5. next turn
