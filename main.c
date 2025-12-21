@@ -36,11 +36,20 @@ smm_player_t *smm_players;
 void generatePlayers(int n, int initEnergy); //generate a new player
 void printPlayerStatus(void); //print all player status at the beginning of each turn
 
+
 //function prototypes
-void printGrades(int player); //print grade history of the player
 float calcAverageGrade(int player); //calculate average grade of the player
-smmGrade_e takeLecture(int player, char *lectureName, int credit); //take the lecture (insert a grade of the player)
 void printGrades(int player); //print all the grade history of the player
+void printGrades(int player); //print grade history of the player
+
+smmGrade_e takeLecture(int player, char *lectureName, int credit) //take the lecture (insert a grade of the player)
+{
+      int i;
+      for(i=0;i<MAX_NODETYPE;i++)
+      {
+        grade = rand()%SMMNODE_MAX_GRADE;
+      }
+}
 
 void* findGrade(int player, char *lectureName) //find the grade from the player's grade history
 {
