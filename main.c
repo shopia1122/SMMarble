@@ -37,12 +37,10 @@ void generatePlayers(int n, int initEnergy); //generate a new player
 void printPlayerStatus(void); //print all player status at the beginning of each turn
 
 //function prototypes
-#if 0
 void printGrades(int player); //print grade history of the player
 float calcAverageGrade(int player); //calculate average grade of the player
 smmGrade_e takeLecture(int player, char *lectureName, int credit); //take the lecture (insert a grade of the player)
 void printGrades(int player); //print all the grade history of the player
-#endif
 
 void* findGrade(int player, char *lectureName) //find the grade from the player's grade history
 {
@@ -140,10 +138,12 @@ void actionNode(int player)
 {
     void *ptr = smmdb_getData(LISTNO_NODE, smm_players[player].pos);
     
-    int type = smmObj_getNodeType((int)ptr);
-    int credit = smmObj_getNodeCredit(smm_players[player].pos);
-    int energy = smmObj_getNodeEnergy(smm_players[player].pos);
+    int type = smmObj_getObjectType((int)ptr);
+    int credit = smmObj_getObjectCredit(smm_players[player].pos);
+    int energy = smmObj_getObjectEnergy(smm_players[player].pos);
     int grade;
+    int foodchance;
+    int foodenergy;
     void *gradePtr;
     
     printf(" --> player%i pos: %i, type: %s, credit: %i, energy: %i\n", 
@@ -185,6 +185,10 @@ void actionNode(int player)
              break;
              
         case SMMNODE_TPYE_FOODCHANCE:
+             foodchance = rand()% 3;
+             
+             smmplayers[player].energy += foodenergy;
+             
              break;
              
         case SMMNODE_TPYE_FESTIVAL:
