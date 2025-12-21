@@ -151,8 +151,8 @@ void actionNode(int player)
     int credit = smmObj_getObjectCredit(smm_players[player].pos);
     int energy = smmObj_getObjectEnergy(smm_players[player].pos);
     int grade;
-    int foodchance;
-    int foodenergy;
+    int foodchance; //choose the random food card, 음식카드를 랜덤으로 고르기 위한 변수  
+    int foodenergy; // plus energy, 현재 에너지에 더해지는 보충 에너지를 표현하는 변수  
     void *gradePtr;
     
     printf(" --> player%i pos: %i, type: %s, credit: %i, energy: %i\n", 
